@@ -1,7 +1,10 @@
 package application;
 
 
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,23 +40,25 @@ public class ControladoraUIDate {
 	private DatePicker date_cita;
 
 
-	ObservableList<Persona> datos = FXCollections.observableArrayList(
-
-			new Persona("David", "01/05/2020"),
-			new Persona("Cris", "05/06/2020")
-			);
+	ObservableList<Persona> datos ;
 
 
 
-	public void initialize(){
-		tabla.setItems(this.datos);
+	public void initialize() throws SQLException{
+
+		datos = FXCollections.observableArrayList();
+
+		ConexionBBDD con = new ConexionBBDD();
+		datos = con.ObtenerPersonas();
+		if(datos.size()!=0)
+			tabla.setItems(this.datos);
 
 		col_nombre.setCellValueFactory(new PropertyValueFactory<Persona,String>("nombre"));
 		col_cita.setCellValueFactory(new PropertyValueFactory<Persona,String>("cita"));
 
 	}
 
-	public void Guardar(){
+	public void Guardar() throws SQLException{
 
 		if( txtNombre.getText().equals("") || date_cita.getValue() == null)
 		{
@@ -65,13 +70,16 @@ public class ControladoraUIDate {
 			return;
 		}
 
-		DateTimeFormatter isoFecha = DateTimeFormatter.ISO_LOCAL_TIME;
+		DateTimeFormatter isoFecha = DateTimeFormatter.ISO_LOCAL_DATE;
 		String fcita = date_cita.getValue().format(isoFecha);
 
 		String nombre = txtNombre.getText();
 
 		Persona nueva = new Persona(nombre,  fcita);
-		datos.add(nueva);
+		ConexionBBDD con = new ConexionBBDD();
+		con.InsertarPersona(nombre, fcita);
+		datos = con.ObtenerPersonas();
+		tabla.setItems(this.datos);
 
 
 	}
