@@ -84,6 +84,19 @@ public class ControladoraUIDate {
 
 	}
 
+	public void Editar(){
+
+		Persona person = tabla.getSelectionModel().getSelectedItem();
+		txtNombre.setText(person.getNombre());
+
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+
+		//convert String to LocalDate
+		LocalDate localDate = LocalDate.parse(person.getCita(), formatter);
+		date_cita.setValue(localDate);
+
+	}
+
 
 
 

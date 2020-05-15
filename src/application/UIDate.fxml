@@ -15,7 +15,7 @@
       <Label layoutX="163.0" layoutY="33.0" text="Nombre" />
       <Label layoutX="409.0" layoutY="33.0" text="Cita" />
       <Button fx:id="btnGrabar" layoutX="274.0" layoutY="110.0" mnemonicParsing="false" onAction="#Guardar" text="Grabar" />
-      <TableView fx:id="tabla" layoutX="133.0" layoutY="167.0" prefHeight="200.0" prefWidth="365.0">
+      <TableView fx:id="tabla" layoutX="133.0" layoutY="167.0" onMouseClicked="#Editar" prefHeight="200.0" prefWidth="365.0">
         <columns>
           <TableColumn fx:id="col_nombre" prefWidth="173.5999755859375" text="Nombre" />
           <TableColumn fx:id="col_cita" prefWidth="192.00006103515625" text="Fecha Cita" />
